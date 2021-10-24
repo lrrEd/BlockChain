@@ -33,7 +33,7 @@ contract Game{
         commitmentA = commitment;
         balances[msg.sender] += msg.value;
         gameRunning = true;
-        expiration = block.timestamp + 180; // one game can last 5 hours mostly
+        expiration = block.timestamp + 5 hours; // one game can last 5 hours mostly
     }
     
     /**
@@ -51,7 +51,7 @@ contract Game{
         playerB = msg.sender;
         balances[msg.sender] += msg.value;
         choiceB = choice;
-        expiration = block.timestamp + 1;
+        expiration = block.timestamp + 4 hours;
     }
     
     /**
@@ -83,7 +83,7 @@ contract Game{
      **/
     function reveal(bool choiceA, bytes32 nonce) public{
         require(playerB != address(0),"the second player hasn't make choice");
-        require(block.timestamp < expiration, "time expirated");
+        require(block.timestamp < expiration, "time expired");
         require(keccak256(abi.encodePacked(choiceA, nonce)) == commitmentA);
         if(choiceA == choiceB){
             balances[playerA] += 1 ether;
