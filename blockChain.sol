@@ -99,7 +99,7 @@ contract Game{
      * each player can withdraw money at anytime except when game is running
      * */
     function withdrawBalance() public payable{
-        require(balances[msg.sender] > 0, "balance is zero");
+        require(balances[msg.sender] != 0, "balance is zero");
         require(!gameRunning, "game is running, cannot withdraw balance");
         uint256 balance = balances[msg.sender];
         balances[msg.sender] = 0;
