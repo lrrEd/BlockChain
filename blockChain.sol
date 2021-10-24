@@ -16,7 +16,6 @@ contract Game{
     
     uint256 expiration;// time expiration
     
-    
     /**
      * The first player starts game.
      * Players should set msg.value not less than 1 ether, 
@@ -35,6 +34,7 @@ contract Game{
         gameRunning = true;
         expiration = block.timestamp + 5 hours; // one game can last 5 hours mostly
     }
+    
     
     /**
      * The second player joins game
@@ -83,13 +83,13 @@ contract Game{
      **/
     function reveal(bool choiceA, bytes32 nonce) public{
         require(playerB != address(0),"the second player hasn't make choice");
-        require(block.timestamp < expiration, "time expired");
+        require(block.timestamp < expiration, "time expirated");
         require(keccak256(abi.encodePacked(choiceA, nonce)) == commitmentA);
         if(choiceA == choiceB){
             balances[playerA] += 1 ether;
             balances[playerB] -= 1 ether;
         }else {
-            balances[playerB] += 1 ether;
+            balances[playerB] += 0.99 ether;
             balances[playerA] -= 1 ether;
         }
         resetGame();
